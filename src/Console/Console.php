@@ -21,19 +21,22 @@ class Console implements KernelConsole
      *
      * @var array|string[]
      */
-    public array $paths = [
-        __DIR__.'/../Commands',
-    ];
+    public array $paths = [];
+
+    const PACKAGE_NAMESPACE = 'Lenvendo\ConsoleCommands';
 
     public InputInterface $input;
     public OutputInterface $output;
 
-    public function __construct($input, $output = null)
+    public function __construct($input, $output = null, array $additionalPaths = [])
     {
         if (empty($output)) {
             $this->output = new Output();
         }
         $this->input = $input;
+
+        $this->paths[] = realpath(dirname(__DIR__) . '/Commands');
+        $this->paths = array_merge($this->paths, $additionalPaths);
 
         $this->load($this->paths);
     }
@@ -78,12 +81,14 @@ class Console implements KernelConsole
 
         foreach ($paths as $path) {
             foreach (glob("$path/*.php") as $file) {
-                require_once $file;
+                $command = self::PACKAGE_NAMESPACE.str_replace(
+                    ['/', '.php'],
+                    ['\\', ''],
+                    array_reverse(explode(dirname($path), $file, 2))[0]
+                );
 
-                $class = basename($file, '.php');
-
-                if (class_exists($class)) {
-                    $this->commands[] = new $class($this->input, $this->output);
+                if (is_subclass_of($command, Command::class)) {
+                    $this->commands[] = new $command($this->input, $this->output);
                 }
             }
         }

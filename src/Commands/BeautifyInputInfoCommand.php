@@ -1,5 +1,7 @@
 <?php
 
+namespace Lenvendo\ConsoleCommands\Commands;
+
 use Lenvendo\ConsoleCommands\Console\Command;
 
 class BeautifyInputInfoCommand extends Command
@@ -18,15 +20,22 @@ class BeautifyInputInfoCommand extends Command
     {
         $this->writeln([
             'Called command: ' . $this->name,
-            '',
-            'Arguments',
         ]);
+
+        if (!empty($this->arguments())) {
+            $this->writeln([
+                '',
+                'Arguments:',
+            ]);
+        }
 
         foreach ($this->arguments() as $argument) {
             $this->writeln('    -  ' . $argument);
         }
 
-        $this->writeln('Options:');
+        if (!empty($this->options())) {
+            $this->writeln('Options:');
+        }
 
         foreach ($this->options() as $name => $value) {
             $this->writeln('    -  ' . $name);
