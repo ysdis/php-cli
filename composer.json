@@ -1,0 +1,21 @@
+{
+    "name": "lenvendo/php-cli",
+    "description": "Package for creating and executing custom console commands",
+    "minimum-stability": "dev",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yaroslav Serov",
+            "email": "yarser2020@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lenvendo\\ConsoleCommands\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.4"
+    }
+}
