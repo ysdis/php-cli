@@ -10,4 +10,4 @@ $console = new Console(new Input());
 
 $status = $console->handle();
 
-//$console->terminate($status);
+$console->terminate($status);
