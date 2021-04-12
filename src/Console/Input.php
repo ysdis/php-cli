@@ -12,19 +12,21 @@ class Input implements InputInterface
      *
      * @var array
      */
-    protected array $options        = [];
+    protected array $options = [];
+
     /**
      * Список обработанных аргументов
      *
      * @var array
      */
-    protected array $arguments      = [];
+    protected array $arguments = [];
+
     /**
      * Наименование вызываемой команды
      *
-     * @var array
+     * @var string
      */
-    protected string $commandName   = 'default-name';
+    protected string $commandName = 'default-name';
 
     private array $tokens;
 
